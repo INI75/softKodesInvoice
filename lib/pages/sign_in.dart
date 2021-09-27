@@ -28,15 +28,15 @@ class _SignInState extends State<SignIn> {
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          SizedBox(height: 10 ),
+          SizedBox(height: 10),
           // !signUp
           //?
           Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: AnimatedContainer(
               duration: Duration(seconds: 2),
               curve: Curves.bounceInOut,
-              height: !signUp ? mediaQuery.size.height : 0,
+              height: !signUp ? 700 : 0,
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: [
@@ -140,8 +140,6 @@ class _SignInState extends State<SignIn> {
                               _email.text,
                               _phoneNumber.text,
                             );
-                            print('hello');
-                            print(_username.text);
 
                             Navigator.pushNamed(
                               context,

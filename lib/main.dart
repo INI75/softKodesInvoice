@@ -1,27 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:invoice/pages/add_items.dart';
 import 'package:invoice/pages/home_page.dart';
 import 'package:invoice/pages/invoice_list.dart';
-import 'package:invoice/pages/invoice_to.dart';
 import 'package:invoice/pages/new_invoice.dart';
 import 'package:invoice/pages/onboarding_page.dart';
 import 'package:invoice/pages/profile.dart';
 import 'package:invoice/pages/recurring_page.dart';
 import 'package:invoice/pages/sign_in.dart';
-import 'package:invoice/pages/client.dart';
+import '/pages/client.dart';
 import 'pages/landing_page.dart';
 import 'pages/settings.dart';
 
-void main() {
-  runApp(Start());
-}
+void main() => runApp(Start());
 
 class Start extends StatelessWidget {
   const Start({Key? key}) : super(key: key);
-//
 
-// handle everything in the drawer before doing new invoice
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,13 +34,11 @@ class Start extends StatelessWidget {
         '/profile': (context) => Profile(),
         '/newinvoice': (context) => NewInvoice(),
         '/settings': (context) => Settings(),
-        '/clientsList':(context)=>ClientsList(),
-        '/invoiceList':(context)=>InvoiceList(),
-        '/invoiceTo':(context)=>InvoiceTo(),
-         '/clientProfile':(context)=>ClientProfile(),
-         '/recurring':(context)=>Recurring(),
-      
-
+        '/clientsList': (context) => ClientsList(),
+        '/invoiceList': (context) => InvoiceList(),
+        '/clientProfile': (context) => ClientProfile(),
+        '/recurring': (context) => Recurring(),
+        '/additem':(context)=>AddItems(),
       },
     );
   }

@@ -16,29 +16,29 @@ class User {
   ]);
   //   learn how to use sqflite 
   
-  void setUsername(String newUsername) {
-    username = newUsername;
-  }
+  // void setUsername(String newUsername) {
+  //   username = newUsername;
+  // }
 
-  void setPassword(String newPassword) {
-    password = newPassword;
-  }
+  // void setPassword(String newPassword) {
+  //   password = newPassword;
+  // }
 
-  void setFullname(String newFullname) {
-    fullName = newFullname;
-  }
+  // void setFullname(String newFullname) {
+  //   fullName = newFullname;
+  // }
 
-  void setCompanyName(String newCompanyName) {
-    companyName = newCompanyName;
-  }
+  // void setCompanyName(String newCompanyName) {
+  //   companyName = newCompanyName;
+  // }
 
-  void setEmail(String newEmail) {
-    email = newEmail;
-  }
+  // void setEmail(String newEmail) {
+  //   email = newEmail;
+  // }
 
-  void setPhoneNumber(String newPhoneNumber) {
-    phoneNumber = newPhoneNumber;
-  }
+  // void setPhoneNumber(String newPhoneNumber) {
+  //   phoneNumber = newPhoneNumber;
+  // }
 }
 
 

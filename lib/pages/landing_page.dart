@@ -12,7 +12,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
-    // TODO: implement initState
+   
     super.initState();
     Timer(
         Duration(seconds: 3),

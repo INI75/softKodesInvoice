@@ -12,7 +12,7 @@ class Bills extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 26, left: 16, right: 16),
+      margin: EdgeInsets.only(top: 16, left: 16, right: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
