@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '/pages/client.dart';
+import '/pages/new_invoice.dart';
 
 class InvoiceList extends StatefulWidget {
   InvoiceList({Key? key}) : super(key: key);
@@ -23,11 +24,10 @@ class _InvoiceListState extends State<InvoiceList> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          AnimatedContainer(
+          Container(
             width: double.infinity,
             margin: EdgeInsets.only(top: 50),
-            height: 70,
-            duration: Duration(seconds: 2),
+            height: 50,
             child: Row(
               children: [
                 IconButton(
@@ -52,62 +52,91 @@ class _InvoiceListState extends State<InvoiceList> {
                           ))
                       .toList(),
                   value: _selectedItem,
-
                   onChanged: (dropDownItems) {
                     setState(() {
                       this._selectedItem = dropDownItems!;
                     });
                   },
-
-                  //
                 ),
-                //
+
                 SizedBox(width: MediaQuery.of(context).size.width * .2),
                 IconButton(onPressed: () {}, icon: Icon(Icons.search))
               ],
             ),
           ),
-          AnimatedContainer(
-            height: 400,
-            duration: Duration(seconds: 1),
+          Container(
+            height: MediaQuery.of(context).size.height - 100,
             child: ListView.builder(
-              itemCount: clientsList.length,
+              itemCount: invoiceList.length,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 70,
-                  margin: EdgeInsets.only(top: 10, left: 16),
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                return Slidable(
+                  actionExtentRatio: .2,
+                  secondaryActions: [
+                    IconSlideAction(
+                      caption: 'More',
+                      color: Colors.green,
+                      icon: Icons.more_horiz,
+                      onTap: () {
+                        Navigator.pushNamed(context, '/invoiceprofile',arguments: invoiceList[index]);
+                      },
+                    ),
+                    IconSlideAction(
+                      caption: 'Delete',
+                      color: Colors.red,
+                      icon: Icons.delete_outline,
+                    ),
+                  ],
+                  direction: Axis.horizontal,
+                  // actions: [
+                  //   IconSlideAction(
+                  //     color: Colors.amber,
+                  //     icon: Icons.ac_unit,
+                  //   )
+                  // ],
+                  actionPane: SlidableDrawerActionPane(),
+                  child: Container(
+                    height: 80,
+                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                    child: Row(
                       children: [
-                        CircleAvatar(
-                          backgroundColor: Color.fromRGBO(30, 115, 159, 1),
-                          radius: 26,
-                          child: Text(
-                            '${clientsList[index].name.characters.first.toUpperCase()}' +
-                                '${clientsList[index].name.characters.last.toUpperCase()}',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
                         Container(
-                          height: 70,
-                          margin: EdgeInsets.only(left: 20),
+                          padding: EdgeInsets.all(5),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(clientsList[index].name,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold)),
-                              SizedBox(height: 3),
-                              Text(clientsList[index].email,
-                                  style: TextStyle(fontSize: 12)),
-                              SizedBox(height: 3),
-                              Text(clientsList[index].address,
-                                  style: TextStyle(fontSize: 12)),
+                              Text(
+                                invoiceList[index].getClientData(),
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                'Date: ${invoiceList[index].getInvoiceDate()}',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              Text(
+                                'Invoice No:${invoiceList[index].getInvoiceNo()}',
+                                style: TextStyle(fontSize: 12),
+                              ),
                             ],
                           ),
                         ),
-                      ]),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'NGN${invoiceList[index].getGrandTotal()}',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(30, 115, 159, 1)),
+                              ),
+                              Text('tax ${invoiceList[index].getTax()}')
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 );
               },
             ),

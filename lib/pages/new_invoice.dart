@@ -1,36 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:invoice/models/add_item_model.dart';
+import 'package:invoice/models/invoice_data.dart';
 import '/widgets/color_button.dart';
 import '/widgets/invoice_bills.dart';
 import '/widgets/line.dart';
 import '/pages/client.dart';
+import '/pages/add_items.dart';
 import 'package:invoice/models/clients.dart';
 
 //bool _addItems = true;
-
-List<AddItemDetails> _addItems = [
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '1'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '2'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '3'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '4'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '5'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '6'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '7'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '8'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '9'),
-  AddItemDetails('_discription', '_quantity', '_rate', '_percentage', '_tax',
-      '_total', '10'),
-];
+List<InvoiceData> invoiceList = [];
 String _invoiceTo = 'Client';
 
 String _invoiceToUpdate = '';
@@ -62,34 +41,75 @@ class _NewInvoiceState extends State<NewInvoice> {
   bool _firstSearch = true;
   String _query = '';
 
-  List<Clients> _items = [];
+  //List<Clients> _items = [];
   List<Clients> _filteredList = [];
 
-  @override
-  void initState() {
-    super.initState();
-    if (clientsList.isNotEmpty) {
-      _items = clientsList;
-      _items.sort();
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   // if (clientsList.isNotEmpty) {
+  //   //   _items.addAll(clientsList);
+
+  //   //   _items.sort();
+  //   // }
+  //    if (_items.isEmpty) {
+  //     _items.addAll(clientsList);
+  //   }
+  //   if (clientsList.isNotEmpty) {
+  //     for (int i = 0; i >= clientsList.length; i++) {
+  //       if (!_items.contains(clientsList[i])) {
+  //         _items.add(clientsList[i]);
+  //       }
+  //     }
+  //     _items.sort();
+  //   }
+  // }
+
+  // _InvoiceToState() {
+  //   _searchview.addListener(() {
+  //     if (_searchview.text.isEmpty) {
+  //       setState(() {
+  //         _firstSearch = true;
+  //         _query = '';
+  //       });
+  //     } else {
+  //       setState(() {
+  //         _firstSearch = false;
+  //         _query = _searchview.text;
+  //       });
+  //     }
+
+  //     //  continue with the video on search    ,,,,,,   find a way to return and up date client
+  //   });
+  // }
+  String _subTotalCal() {
+    double subT = 0;
+    for (int i = 0; i < addItemsList.length; i++) {
+      subT = subT + double.parse(addItemsList[i].getTotal());
+      print('subT =$subT');
     }
+    print('subT =$subT');
+    return subT.toString();
   }
 
-  _InvoiceToState() {
-    _searchview.addListener(() {
-      if (_searchview.text.isEmpty) {
-        setState(() {
-          _firstSearch = true;
-          _query = '';
-        });
-      } else {
-        setState(() {
-          _firstSearch = false;
-          _query = _searchview.text;
-        });
-      }
+  String _totalDiscountCal() {
+    double disT = 0;
+    for (int i = 0; i < addItemsList.length; i++) {
+      disT = disT + double.parse(addItemsList[i].getPercentage());
+    }
+    disT = disT * 0.2;
+    print('disT =$disT');
+    return disT.toString();
+  }
 
-      //  continue with the video on search    ,,,,,,   find a way to return and up date client
-    });
+  String _taxCal() {
+    double taxT = 0;
+    for (int i = 0; i < addItemsList.length; i++) {
+      taxT = taxT + double.parse(addItemsList[i].getTax());
+    }
+    print('taxT =$taxT');
+    return taxT.toString();
   }
 
   @override
@@ -244,7 +264,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                             ),
                           ),
 
-                          _addItems.isEmpty
+                          addItemsList.isEmpty
                               ? Text(
                                   'You have 0 items',
                                   style: TextStyle(
@@ -254,7 +274,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                               : Container(
                                   height: 120,
                                   child: ListView.builder(
-                                    itemCount: _addItems.length,
+                                    itemCount: addItemsList.length,
                                     itemBuilder: (context, index) {
                                       return Container(
                                         margin:
@@ -264,7 +284,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                                _addItems[index]
+                                                addItemsList[index]
                                                     .getDiscription(),
                                                 style: TextStyle(
                                                   fontSize: 16,
@@ -280,9 +300,9 @@ class _NewInvoiceState extends State<NewInvoice> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                      'Qty: ${_addItems[index].getNo()}'),
+                                                      'Qty: ${addItemsList[index].getQuantity()}'),
                                                   Text(
-                                                      'NGN${_addItems[index].getTotal()}')
+                                                      'NGN${addItemsList[index].getTotal()}')
                                                 ],
                                               ),
                                             ),
@@ -295,14 +315,14 @@ class _NewInvoiceState extends State<NewInvoice> {
                           //  if (_addItems.isEmpty)
                           //  Column(children: [
 
-                          if (_addItems.isEmpty) (SizedBox(height: 16)),
+                          if (addItemsList.isEmpty) (SizedBox(height: 16)),
                           AccentColoredButtons(
                               funtion: () {
                                 Navigator.pushNamed(context, '/additem');
-                                //  to create item and add to item list
+
                               },
                               title: 'Add Item'),
-                          _addItems.isEmpty
+                          addItemsList.isEmpty
                               ? SizedBox(height: 17)
                               : SizedBox(height: 3),
                           //   ]),
@@ -310,38 +330,46 @@ class _NewInvoiceState extends State<NewInvoice> {
                       ),
                     ),
                     DashLine(),
-                    Container(
-                      child: Column(
-                        children: [
-                          Bills(title: 'Sub Total', amount: _subTotal),
-                          Bills(title: 'Discount', amount: _discount),
-                          Bills(title: 'Tax', amount: _tax),
-                          Container(
-                            width: double.infinity,
-                            margin: EdgeInsets.only(
-                                top: 28, left: 16, right: 16, bottom: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Grand Total',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(30, 115, 159, 1),
-                                      fontSize: 16),
-                                ),
-                                _total <= 0
-                                    ? Text('')
-                                    : Text(
-                                        'NGN$_total',
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(30, 115, 159, 1),
-                                            fontSize: 16),
-                                      ),
-                              ],
-                            ),
-                          )
-                        ],
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          _subTotal = double.parse(_subTotalCal());
+                          _discount = double.parse(_totalDiscountCal());
+                          _tax = double.parse(_taxCal());
+                          _total = _tax + _discount + _subTotal;
+                        });
+                      },
+                      child: Container(
+                        child: Column(
+                          children: [
+                            Bills(title: 'Sub Total', amount: _subTotal),
+                            Bills(title: 'Discount', amount: _discount),
+                            Bills(title: 'Tax', amount: _tax),
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.only(
+                                  top: 28, left: 16, right: 16, bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Grand Total',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(30, 115, 159, 1),
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    'NGN$_total',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(30, 115, 159, 1),
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     DashLine(),
@@ -349,10 +377,41 @@ class _NewInvoiceState extends State<NewInvoice> {
                     ColoredButtons(
                         funtion: () {
                           setState(() {
-                            _invoiceToUpdate = '';
-                            _invoiceTo = 'Client';
-                            invoiceNo++;
-                            _showD();
+                            if (_date.isNotEmpty &&
+                                _invoiceToUpdate.isNotEmpty) {
+                              final a = InvoiceData(
+                                  invoiceNo.toString(),
+                                  _date,
+                                  _invoiceToUpdate,
+                                  addItemsList,
+                                  _subTotal.toString(),
+                                  _discount.toString(),
+                                  _tax.toString(),
+                                  _total.toString());
+                              invoiceList.add(a);
+                              _invoiceToUpdate = '';
+                              _invoiceTo = 'Client';
+                              addItemsList = [];
+                              _date = '';
+                              _total = 0;
+                              _subTotal = 0;
+                              _discount = 0;
+                              _tax = 0;
+                              invoiceNo++;
+                              _showD();
+                              Navigator.pop(context);
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text('Invalid'),
+                                    content: Text(
+                                        'Please enter the required details'),
+                                  );
+                                },
+                              );
+                            }
                           });
                         },
                         title: 'Create Invoice'),
@@ -371,21 +430,35 @@ class _NewInvoiceState extends State<NewInvoice> {
                 curve: Curves.bounceInOut,
                 child: Column(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () {
-                          setState(() {
-                            hope = !hope;
-                          });
-                        },
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              onPressed: () {
+                                setState(() {
+                                  hope = !hope;
+                                });
+                              },
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/clientsList');
+                              },
+                              icon: Icon(Icons.add))
+                        ],
                       ),
                     ),
                     SizedBox(height: 15),
                     _createSearchView(),
                     DashLine(),
-                    _items.isEmpty
+                    clientsList.isEmpty
                         ? _createClient()
                         : _firstSearch
                             ? _createListView()
@@ -428,12 +501,12 @@ class _NewInvoiceState extends State<NewInvoice> {
   Widget _createListView() {
     return Flexible(
         child: ListView.builder(
-      itemCount: _items.length,
+      itemCount: clientsList.length,
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
             setState(() {
-              setInvoiceTo(_items[index].name);
+              setInvoiceTo(clientsList[index].name);
               hope = !hope;
             });
           },
@@ -445,8 +518,8 @@ class _NewInvoiceState extends State<NewInvoice> {
                 backgroundColor: Color.fromRGBO(30, 115, 159, 1),
                 radius: 26,
                 child: Text(
-                  '${_items[index].name.characters.first.toUpperCase()}' +
-                      '${_items[index].name.characters.last.toUpperCase()}',
+                  '${clientsList[index].name.characters.first.toUpperCase()}' +
+                      '${clientsList[index].name.characters.last.toUpperCase()}',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
@@ -456,13 +529,15 @@ class _NewInvoiceState extends State<NewInvoice> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(_items[index].name,
+                    Text(clientsList[index].name,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold)),
                     SizedBox(height: 3),
-                    Text(_items[index].email, style: TextStyle(fontSize: 12)),
+                    Text(clientsList[index].email,
+                        style: TextStyle(fontSize: 12)),
                     SizedBox(height: 3),
-                    Text(_items[index].address, style: TextStyle(fontSize: 12)),
+                    Text(clientsList[index].address,
+                        style: TextStyle(fontSize: 12)),
                   ],
                 ),
               ),
@@ -476,10 +551,10 @@ class _NewInvoiceState extends State<NewInvoice> {
 //
 //
   Widget _performSearchView() {
-    for (int i = 0; i < _items.length; i++) {
-      var _itemName = _items[i].name;
+    for (int i = 0; i < clientsList.length; i++) {
+      var _itemName = clientsList[i].name;
       if (_itemName.toLowerCase().contains(_query.toLowerCase())) {
-        _filteredList.add(_items[i]);
+        _filteredList.add(clientsList[i]);
       }
     }
     return _filteredListView();
@@ -493,7 +568,7 @@ class _NewInvoiceState extends State<NewInvoice> {
         return InkWell(
           onTap: () {
             setState(() {
-              setInvoiceTo(_items[index].name);
+              setInvoiceTo(clientsList[index].name);
               hope = !hope;
             });
           },
@@ -545,7 +620,11 @@ class _NewInvoiceState extends State<NewInvoice> {
           children: [
             Container(
               margin: EdgeInsets.only(bottom: 30, top: 150),
-              child: Image.asset('assets/boxsearch.png'),
+              child: GestureDetector(
+                  onTap: () {
+                    setState(() {});
+                  },
+                  child: Image.asset('assets/boxsearch.png')),
               height: 60,
               width: 60,
             ),

@@ -3,6 +3,8 @@ import 'package:invoice/models/add_item_model.dart';
 import 'package:invoice/widgets/color_button.dart';
 import 'package:invoice/widgets/line.dart';
 
+ List<AddItemDetails> addItemsList = [];
+
 class AddItems extends StatefulWidget {
   AddItems({Key? key}) : super(key: key);
 
@@ -29,8 +31,14 @@ class _AddItemsState extends State<AddItems> {
   var _percentage = TextEditingController();
 
   var _tax = TextEditingController();
+  String _total = '';
 
-  var _total;
+  String _totalCal() {
+    double ans = 0;
+    ans = (double.parse(_quantity.text) * double.parse(_rate.text)) /
+        double.parse(_percentage.text);
+    return ans.round().toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -257,37 +265,78 @@ class _AddItemsState extends State<AddItems> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: 50,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Total Amount',
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _total = _totalCal();
+                    });
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 150,
+                    // add defined width to prevent overflow
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Tap to get Total',
+                            style: TextStyle(
+                                color: Color.fromRGBO(108, 108, 108, 1),
+                                fontSize: 12)),
+                        Text(
+                          'NGN $_total',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: Color.fromRGBO(108, 108, 108, 1),
-                              fontSize: 12)),
-                      Text(
-                        'NGN $_total',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                    ],
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Container(
-                  width: 200,
+                Expanded(
+                  // width: 180,
                   child: ColoredButtons(
                       funtion: () {
-                        final a = AddItemDetails(
-                            _discription.text,
-                            _quantity.text,
-                            _rate.text,
-                            _percentage.text,
-                            _tax.text,
-                            _total,
-                            no.toString());
-                        no++;
+                        if (_discription.text.isNotEmpty &&
+                            _quantity.text.isNotEmpty &&
+                            _rate.text.isNotEmpty &&
+                            _percentage.text.isNotEmpty &&
+                            _tax.text.isNotEmpty &&
+                            _total.isNotEmpty) {
+                          final a = AddItemDetails(
+                              _discription.text,
+                              _quantity.text,
+                              _rate.text,
+                              _percentage.text,
+                              _tax.text,
+                              _total,
+                              no.toString());
+                          no++;
+                          addItemsList.add(a);
+                          _discription.clear();
+                          _quantity.clear();
+                          _rate.clear();
+                          _percentage.clear();
+                          _tax.clear();
+                          _total = '';
+
+                          Navigator.pop(context);
+                        } else {
+                          setState(() {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Invalid'),
+                                  content: Text(
+                                      'Please ensure to enter all values' +
+                                          ' required to make a valid Item'),
+                                );
+                              },
+                            );
+                          });
+                        }
                       },
                       title: 'Add Item'),
                 )

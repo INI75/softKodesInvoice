@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:invoice/pages/add_items.dart';
 import 'package:invoice/pages/home_page.dart';
 import 'package:invoice/pages/invoice_list.dart';
+import 'package:invoice/pages/invoice_profile.dart';
 import 'package:invoice/pages/new_invoice.dart';
 import 'package:invoice/pages/onboarding_page.dart';
 import 'package:invoice/pages/profile.dart';
@@ -39,6 +40,7 @@ class Start extends StatelessWidget {
         '/clientProfile': (context) => ClientProfile(),
         '/recurring': (context) => Recurring(),
         '/additem':(context)=>AddItems(),
+        '/invoiceprofile':(context)=>InvoiceProfile(),
       },
     );
   }
