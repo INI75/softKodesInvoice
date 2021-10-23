@@ -17,6 +17,7 @@ class _InvoiceProfileState extends State<InvoiceProfile> {
     var person = ModalRoute.of(context)!.settings.arguments as InvoiceData;
     return Scaffold(
       appBar: AppBar(
+// Create const color field
         backgroundColor: Colors.white,
         title: Text(person.getClientData(),
             style: TextStyle(
@@ -74,6 +75,7 @@ class _InvoiceProfileState extends State<InvoiceProfile> {
                   );
                 });
               },
+     // Const all static fields with no context
               icon: Icon(Icons.more_horiz))
         ],
         iconTheme: IconThemeData(color: Colors.black, size: 23.33),
@@ -148,7 +150,7 @@ class _InvoiceProfileState extends State<InvoiceProfile> {
               ],
             ),
           ),
-          DashLine(),
+          DashLine(),/// Replace with divider
           Container(
             margin: EdgeInsets.only(top: 24, left: 16, right: 16),
             child: Column(
@@ -193,7 +195,7 @@ class _InvoiceProfileState extends State<InvoiceProfile> {
                                   ],
                                 ),
                               ),
-                              DashLine()
+                              DashLine()/// Replace with divider
                             ],
                           ),
                         );
