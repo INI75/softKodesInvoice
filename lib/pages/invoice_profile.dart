@@ -84,7 +84,8 @@ class _InvoiceProfileState extends State<InvoiceProfile> {
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: 16),
-            height: 64,
+            /// A media Query for dynamic response to different screen size
+      height: 64,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -125,7 +126,7 @@ class _InvoiceProfileState extends State<InvoiceProfile> {
               ],
             ),
           ),
-          DashLine(),
+          DashLine(),/// Replace with divider
           Container(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 13),
             child: Column(
