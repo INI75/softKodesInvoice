@@ -222,6 +222,7 @@ class _ClientsListState extends State<ClientsList> {
                         ])),
                 ColoredButtons(
                     funtion: () {
+                    // Add more if checks for validation when testing
                       if (_clientAddress.text.isNotEmpty &&
                           _clientCity.text.isNotEmpty &&
                           _clientCountry.text.isNotEmpty &&
