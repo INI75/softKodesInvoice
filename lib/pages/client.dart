@@ -166,9 +166,9 @@ class _ClientsListState extends State<ClientsList> {
                     ],
                   ),
                 ),
-                DashLine(),
+                DashLine(), // replace with divider
                 Container(
-                    height: 280,
+                    height: 280, // use media Query to determine dynamic height
                     margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,6 +295,7 @@ class _ClientProfileState extends State<ClientProfile> {
 
   @override
   Widget build(BuildContext context) {
+// Use provider
     var person = ModalRoute.of(context)!.settings.arguments as Clients;
     return Scaffold(
         body: ListView(children: [
@@ -317,7 +318,7 @@ class _ClientProfileState extends State<ClientProfile> {
                 },
                 icon: FaIcon(FontAwesomeIcons.pen, size: 17))
           ])),
-      SizedBox(height: 20),
+      SizedBox(height: 20),// use dynamic height to adjust to screen size
       Container(
           height: 170,
           child: Column(
@@ -346,7 +347,8 @@ class _ClientProfileState extends State<ClientProfile> {
               Figs(number: '3', word: 'Unpaid invoice')
             ]),
         height: 100,
-        width: double.infinity,
+        width: double.infinity, // use media Query
+       // Creat const colors 
         color: Color.fromRGBO(30, 115, 159, 1),
       )
     ]));
@@ -414,10 +416,11 @@ class ClientEdit extends StatelessWidget {
           children: [
             Icon(
               icon,
+            // Create const color 
               color: Color.fromRGBO(30, 115, 159, 1),
             ),
             Container(
-                width: 250,
+                width: 250,// use media Query
                 child: TextField(
                   controller: text,
                   style: TextStyle(fontSize: 13),
