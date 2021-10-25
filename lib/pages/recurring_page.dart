@@ -40,7 +40,7 @@ class _RecurringState extends State<Recurring> {
               ],
             ),
           ),
-          DashLine(),
+          DashLine(), // replace with divider
           Container(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
             child: Column(
@@ -74,10 +74,10 @@ class _RecurringState extends State<Recurring> {
                               color: Colors.white,
                             )
                           : Container(),
-                      height: 25,
-                      width: 25,
+                      height: 25, // use media Query to improve responsiveness
+                      width: 25, // use media Query to improve responsiveness
                       decoration: BoxDecoration(
-                          color: Color.fromRGBO(30, 115, 159, 1),
+                          color: Color.fromRGBO(30, 115, 159, 1),// create const variable
                           boxShadow: [
                             BoxShadow(
                                 blurRadius: 1,
@@ -87,13 +87,13 @@ class _RecurringState extends State<Recurring> {
                           ])),
                 ),
                 Container(
-                  width: 270,
+                  width: 270,// use media Query
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Send Invoice Automatically',
                           style: TextStyle(
-                              color: Color.fromRGBO(30, 115, 159, 1),
+                              color: Color.fromRGBO(30, 115, 159, 1),// create const variable
                               fontSize: 16)),
                       Text(
                         'Send this  invoice at a specific' +
