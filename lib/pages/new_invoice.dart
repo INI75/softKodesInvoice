@@ -343,6 +343,7 @@ class _NewInvoiceState extends State<NewInvoice> {
                         child: Column(
                           children: [
                             Bills(title: 'Sub Total', amount: _subTotal),
+          /// Show percentage and not number 
                             Bills(title: 'Discount', amount: _discount),
                             Bills(title: 'Tax', amount: _tax),
                             Container(
