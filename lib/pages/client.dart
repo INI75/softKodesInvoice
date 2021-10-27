@@ -125,6 +125,7 @@ class _ClientsListState extends State<ClientsList> {
                   height: 210,
                   margin: EdgeInsets.only(left: 16, right: 16, top: 10),
                   child: Column(
+                /// Make this scrollable for dynamic response
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Client Details',
