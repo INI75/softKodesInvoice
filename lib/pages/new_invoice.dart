@@ -658,7 +658,8 @@ class _NewInvoiceState extends State<NewInvoice> {
   ///
   ///
   ///
-  ///
+  ///.  Make this reponsive to different screen size, shows yellow and black 
+/// When minimized 
 
   _showD() {
     showDialog(
